@@ -251,8 +251,7 @@ ul {
 }
 
 .search-input:focus {
-    border-color: var(--primary-color);
-    box-shadow: 0 0 0 2px rgba(139, 0, 0, 0.1);
+    
 }
 
 .filters {
