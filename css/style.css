@@ -399,10 +399,10 @@ ul {
     display: none;
 }
 
-/* Стили для метки, которая будет отображаться как чекбокс */
+/* Стиль для текста напротив чекбокса */
 .filter-option label {
     position: relative;
-    padding-left: 25px;
+    padding-left: 20px;
     cursor: pointer;
     display: block;
     width: 100%;
@@ -424,9 +424,9 @@ ul {
     position: absolute;
     left: 0;
     top: 2px;
-    width: 14px;
-    height: 14px;
-    border: 1.5px solid #000;
+    width: 10px;
+    height: 10px;
+    border: 1px solid #000;
     background-color: white;
     transition: all 0.2s ease;
     border-radius: 2px;
