@@ -6,12 +6,66 @@ document.addEventListener('DOMContentLoaded', function() {
     const registerForm = document.getElementById('register-form');
     if (registerForm) {
         setupFormValidation(registerForm);
+        
+        // Предотвращаем стандартную отправку формы
+        registerForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            if (validateForm(registerForm)) {
+                alert('Регистрация успешна! Вы будете перенаправлены на страницу входа.');
+                setTimeout(() => {
+                    window.location.href = 'login.html';
+                }, 1000);
+            }
+        });
     }
     
     // Обработка формы входа
     const loginForm = document.getElementById('login-form');
     if (loginForm) {
         setupFormValidation(loginForm);
+        
+        // Предотвращаем стандартную отправку формы
+        loginForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            if (validateForm(loginForm)) {
+                alert('Вход выполнен успешно! Вы будете перенаправлены на главную страницу.');
+                setTimeout(() => {
+                    window.location.href = 'index.html';
+                }, 1000);
+            }
+        });
+    }
+    
+    // Обработка формы восстановления пароля
+    const resetForm = document.getElementById('reset-form');
+    if (resetForm) {
+        const emailInput = document.getElementById('email');
+        
+        // Добавляем обработчики событий для валидации поля email
+        emailInput.addEventListener('input', function() {
+            validateInput(emailInput);
+        });
+        
+        emailInput.addEventListener('blur', function() {
+            validateInput(emailInput);
+        });
+        
+        // Предотвращаем стандартную отправку формы
+        resetForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            const confirmCheckbox = document.getElementById('confirm_reset');
+            
+            let isValid = validateInput(emailInput) && confirmCheckbox.checked;
+            
+            if (isValid) {
+                alert('Инструкции по восстановлению пароля отправлены на указанный email.');
+                setTimeout(() => {
+                    window.location.href = 'login.html';
+                }, 1500);
+            } else if (!confirmCheckbox.checked) {
+                alert('Пожалуйста, подтвердите, что у вас есть доступ к указанной почте.');
+            }
+        });
     }
 });
 
@@ -33,21 +87,24 @@ function setupFormValidation(form) {
             validateInput(input);
         });
     });
+}
+
+/**
+ * Валидация всей формы
+ * @param {HTMLFormElement} form - форма для валидации
+ * @return {boolean} - результат валидации
+ */
+function validateForm(form) {
+    const inputs = form.querySelectorAll('input');
+    let isValid = true;
     
-    // Обработка отправки формы
-    form.addEventListener('submit', function(e) {
-        let isValid = true;
-        
-        inputs.forEach(input => {
-            if (!validateInput(input)) {
-                isValid = false;
-            }
-        });
-        
-        if (!isValid) {
-            e.preventDefault();
+    inputs.forEach(input => {
+        if (!validateInput(input)) {
+            isValid = false;
         }
     });
+    
+    return isValid;
 }
 
 /**
