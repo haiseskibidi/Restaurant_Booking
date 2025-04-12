@@ -1,0 +1,80 @@
+/* Стили для карусели */
+.carousel-container {
+    position: relative;
+    width: 100%;
+    overflow: visible; /* Делаем видимыми стрелки за пределами контейнера */
+    margin: 20px 0;
+    padding: 0 15px; /* Добавляем отступ для стрелок */
+}
+
+/* Скрываем карточки, которые не должны быть видны */
+.carousel-container .restaurant-cards {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+    width: 100%;
+    transition: none; /* Без анимации */
+}
+
+/* Стрелки карусели */
+.carousel-arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 40px;
+    height: 40px;
+    background-color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    z-index: 100;
+    border: none;
+    transition: all 0.3s ease;
+}
+
+.carousel-arrow:hover {
+    background-color: #fff;
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.3);
+    transform: translateY(-50%) scale(1.15); /* Увеличение при наведении */
+}
+
+.carousel-arrow.prev {
+    left: -15px; /* Стрелка частично заходит на первую карточку */
+}
+
+.carousel-arrow.next {
+    right: -15px; /* Стрелка частично заходит на последнюю карточку */
+}
+
+.carousel-arrow i {
+    font-size: 18px;
+    color: #333;
+}
+
+.carousel-arrow.disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    pointer-events: none;
+}
+
+/* Адаптивность для карусели */
+@media (max-width: 1024px) {
+    .carousel-container .restaurant-cards {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    .carousel-container .restaurant-cards {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 576px) {
+    .carousel-container .restaurant-cards {
+        grid-template-columns: 1fr;
+    }
+} 

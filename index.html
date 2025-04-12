@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Table&Go - Бронирование ресторанов во Владивостоке</title>
     <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/carousel.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
@@ -92,90 +93,17 @@
                         </button>
                     </div>
                 </div>
-                <div class="restaurant-cards">
-                    <!-- Ресторан 1 -->
-                    <div class="card restaurant-card">
-                        <div class="card-image">
-                            <img id="img-restaurant-supra" alt="Супра">
-                        </div>
-                        <div class="card-body">
-                            <div class="card-header">
-                                <h3 class="card-title">Супра</h3>
-                                <div class="rating">
-                                    <i class="fas fa-star"></i>
-                                    <span>4.8</span>
-                                </div>
-                            </div>
-                            <div class="card-info">
-                                <p>Грузинская кухня • ₽₽</p>
-                                <p class="address">ул. Адмирала Фокина, д.1Б</p>
-                            </div>
-                            <a href="#" class="btn book-btn">Забронировать</a>
-                        </div>
+                <!-- Карусель ресторанов -->
+                <div class="carousel-container">
+                    <button type="button" class="carousel-arrow prev">
+                        <i class="fas fa-chevron-left"></i>
+                    </button>
+                    <div id="restaurants-container" class="restaurant-cards">
+                        <!-- Карточки ресторанов будут загружены динамически из JSON -->
                     </div>
-                    
-                    <!-- Ресторан 2 -->
-                    <div class="card restaurant-card">
-                        <div class="card-image">
-                            <img id="img-restaurant-tokyo" alt="Tokyo Kawaii">
-                        </div>
-                        <div class="card-body">
-                            <div class="card-header">
-                                <h3 class="card-title">Tokyo Kawaii</h3>
-                                <div class="rating">
-                                    <i class="fas fa-star"></i>
-                                    <span>4.6</span>
-                                </div>
-                            </div>
-                            <div class="card-info">
-                                <p>Японская кухня • ₽₽</p>
-                                <p class="address">ул. Семёновская, д.7В</p>
-                            </div>
-                            <a href="#" class="btn book-btn">Забронировать</a>
-                        </div>
-                    </div>
-                    
-                    <!-- Ресторан 3 -->
-                    <div class="card restaurant-card">
-                        <div class="card-image">
-                            <img id="img-restaurant-millionka" alt="Миллионка">
-                        </div>
-                        <div class="card-body">
-                            <div class="card-header">
-                                <h3 class="card-title">Миллионка</h3>
-                                <div class="rating">
-                                    <i class="fas fa-star"></i>
-                                    <span>4.7</span>
-                                </div>
-                            </div>
-                            <div class="card-info">
-                                <p>Европейская кухня • ₽₽₽</p>
-                                <p class="address">ул. Семёновская, д.3А</p>
-                            </div>
-                            <a href="#" class="btn book-btn">Забронировать</a>
-                        </div>
-                    </div>
-                    
-                    <!-- Ресторан 4 -->
-                    <div class="card restaurant-card">
-                        <div class="card-image">
-                            <img id="img-restaurant-ilpatio" alt="IL Патио">
-                        </div>
-                        <div class="card-body">
-                            <div class="card-header">
-                                <h3 class="card-title">IL Патио</h3>
-                                <div class="rating">
-                                    <i class="fas fa-star"></i>
-                                    <span>4.9</span>
-                                </div>
-                            </div>
-                            <div class="card-info">
-                                <p>Итальянская кухня • ₽₽₽</p>
-                                <p class="address">ул. Калинина, д.8</p>
-                            </div>
-                            <a href="#" class="btn book-btn">Забронировать</a>
-                        </div>
-                    </div>
+                    <button type="button" class="carousel-arrow next">
+                        <i class="fas fa-chevron-right"></i>
+                    </button>
                 </div>
             </div>
         </section>
@@ -345,8 +273,9 @@
         </div>
     </footer>
 
-    <script src="js/images.js"></script>
     <script src="js/filters-data.js"></script>
+    <script src="js/images.js"></script>
     <script src="js/script.js"></script>
+    <script src="js/restaurants-carousel.js"></script>
 </body>
 </html>

@@ -10,7 +10,7 @@ echo Текущая директория: %CD%
 echo.
 
 REM Задаем порт
-set PORT=8000
+set PORT=8080
 
 REM Метод 1: Python
 python --version >nul 2>&1
