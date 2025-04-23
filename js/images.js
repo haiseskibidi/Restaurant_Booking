@@ -1,16 +1,12 @@
-/**
- * В этом файле хранятся все ссылки на изображения ресторанов и баров
- */
-
 const IMAGES = {
-    // Рестораны
+    
     restaurants: {
         supra: {
             name: "Супра",
             elementId: "supra",
             image: "assets/images/restaurants/Supra.jpg",
-            imageFit: "cover", // cover, contain, fill
-            imagePosition: "center" // center, top, bottom, left, right, или "x% y%"
+            imageFit: "cover", 
+            imagePosition: "center" 
         },
         tokyoKawaii: {
             name: "Tokyo Kawaii",
@@ -35,7 +31,7 @@ const IMAGES = {
         }
     },
     
-    // Бары
+    
     bars: {
         bruggePub: {
             name: "Brugge Pub",
@@ -64,26 +60,40 @@ const IMAGES = {
             image: "assets/images/bars/Jiklevich.jpg",
             imageFit: "cover",
             imagePosition: "center"
+        },
+        syndicate: {
+            name: "Syndicate",
+            elementId: "syndicate",
+            image: "assets/images/bars/Syndicate.jpg", 
+            imageFit: "cover",
+            imagePosition: "center"
+        },
+        moonshine: {
+            name: "Moonshine",
+            elementId: "moonshine",
+            image: "assets/images/bars/Moonshine.jpg", 
+            imageFit: "cover",
+            imagePosition: "center"
         }
     },
     
-    // Специальные предложения
+    
     offers: {
         summerTerraces: {
             title: "Лучшие летние террасы",
-            image: "https://via.placeholder.com/300x200",
+            image: "assets/images/offers/Summer_Terraces.jpg",
             imageFit: "cover",
             imagePosition: "center"
         },
         romanticDinner: {
             title: "Романтический ужин",
-            image: "https://via.placeholder.com/300x200",
+            image: "assets/images/offers/Romantic_Dinner.jpg",
             imageFit: "cover",
             imagePosition: "center"
         },
         weeklyDiscounts: {
             title: "Скидки недели",
-            image: "https://via.placeholder.com/300x200",
+                image: "assets/images/offers/Weekly_Discounts.jpg",
             imageFit: "cover",
             imagePosition: "center"
         }

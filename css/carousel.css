@@ -1,22 +1,26 @@
-/* Стили для карусели */
 .carousel-container {
     position: relative;
     width: 100%;
-    overflow: visible; /* Делаем видимыми стрелки за пределами контейнера */
-    margin: 20px 0;
-    padding: 0 15px; /* Добавляем отступ для стрелок */
+    overflow: hidden;
+    margin: 25px 0;
+    padding-inline: 15px;
+    padding-bottom: 25px;
 }
 
-/* Скрываем карточки, которые не должны быть видны */
-.carousel-container .restaurant-cards {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
+.carousel-container .restaurant-cards,
+.carousel-container .bar-cards {
+    display: flex;
+    width: auto;
     gap: 20px;
-    width: 100%;
-    transition: none; /* Без анимации */
+    transition: transform 0.5s ease;
 }
 
-/* Стрелки карусели */
+.carousel-container .card {
+    flex: 0 0 calc(25% - 15px);
+    margin-right: 0;
+    box-sizing: border-box;
+}
+
 .carousel-arrow {
     position: absolute;
     top: 50%;
@@ -38,15 +42,15 @@
 .carousel-arrow:hover {
     background-color: #fff;
     box-shadow: 0 3px 8px rgba(0, 0, 0, 0.3);
-    transform: translateY(-50%) scale(1.15); /* Увеличение при наведении */
+    transform: translateY(-50%) scale(1.15);
 }
 
 .carousel-arrow.prev {
-    left: -15px; /* Стрелка частично заходит на первую карточку */
+    left: 25px;
 }
 
 .carousel-arrow.next {
-    right: -15px; /* Стрелка частично заходит на последнюю карточку */
+    right: 25px;
 }
 
 .carousel-arrow i {
@@ -60,21 +64,55 @@
     pointer-events: none;
 }
 
-/* Адаптивность для карусели */
+.popular-section .container {
+    position: relative;
+    overflow: visible;
+    padding: 0 35px;
+}
+
 @media (max-width: 1024px) {
-    .carousel-container .restaurant-cards {
-        grid-template-columns: repeat(3, 1fr);
+    .carousel-container .card {
+        flex: 0 0 calc(33.333% - 14px);
     }
 }
 
 @media (max-width: 768px) {
-    .carousel-container .restaurant-cards {
-        grid-template-columns: repeat(2, 1fr);
+    .carousel-container .card {
+        flex: 0 0 calc(50% - 10px);
+    }
+    
+    .popular-section .container {
+        padding: 0 30px;
+    }
+    
+    .carousel-arrow.prev {
+        left: -20px;
+    }
+    
+    .carousel-arrow.next {
+        right: -20px;
     }
 }
 
 @media (max-width: 576px) {
-    .carousel-container .restaurant-cards {
-        grid-template-columns: 1fr;
+    .carousel-container .card {
+        flex: 0 0 100%;
+    }
+    
+    .popular-section .container {
+        padding: 0 25px;
+    }
+    
+    .carousel-arrow {
+        width: 30px;
+        height: 30px;
+    }
+    
+    .carousel-arrow.prev {
+        left: -15px;
+    }
+    
+    .carousel-arrow.next {
+        right: -15px;
     }
 } 

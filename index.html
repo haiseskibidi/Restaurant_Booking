@@ -9,7 +9,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
-    <!-- Шапка сайта -->
     <header class="header">
         <div class="container header-container">
             <div class="header-left">
@@ -41,9 +40,7 @@
         </div>
     </header>
 
-    <!-- Основной контент -->
     <main>
-        <!-- Блок поиска -->
         <section class="search-section">
             <div class="container">
                 <h1 class="main-title">Забронируйте свой идеальный ресторан</h1>
@@ -80,7 +77,6 @@
             </div>
         </section>
 
-        <!-- Популярные рестораны -->
         <section class="popular-section restaurant-section">
             <div class="container">
                 <div class="section-header">
@@ -93,121 +89,160 @@
                         </button>
                     </div>
                 </div>
-                <!-- Карусель ресторанов -->
+                <button type="button" class="carousel-arrow prev">
+                    <i class="fas fa-chevron-left"></i>
+                </button>
                 <div class="carousel-container">
-                    <button type="button" class="carousel-arrow prev">
-                        <i class="fas fa-chevron-left"></i>
-                    </button>
                     <div id="restaurants-container" class="restaurant-cards">
-                        <!-- Карточки ресторанов будут загружены динамически из JSON -->
                     </div>
-                    <button type="button" class="carousel-arrow next">
-                        <i class="fas fa-chevron-right"></i>
-                    </button>
                 </div>
+                <button type="button" class="carousel-arrow next">
+                    <i class="fas fa-chevron-right"></i>
+                </button>
             </div>
         </section>
 
-        <!-- Популярные бары -->
         <section class="popular-section bars-section">
             <div class="container">
                 <div class="section-header">
                     <h2 class="section-title">Популярные бары</h2>
                 </div>
-                <div class="bar-cards">
-                    <!-- Бар 1 -->
-                    <div class="card bar-card">
-                        <div class="card-image">
-                            <img id="img-bar-brugge" alt="Brugge Pub">
-                        </div>
-                        <div class="card-body">
-                            <div class="card-header">
-                                <h3 class="card-title">Brugge Pub</h3>
-                                <div class="rating">
-                                    <i class="fas fa-star"></i>
-                                    <span>4.8</span>
+                <button type="button" class="carousel-arrow prev">
+                    <i class="fas fa-chevron-left"></i>
+                </button>
+                <div class="carousel-container">
+                    <div id="bars-container" class="bar-cards">
+                        <div class="card bar-card">
+                            <div class="card-image">
+                                <img id="img-bar-brugge" alt="Brugge Pub">
+                            </div>
+                            <div class="card-body">
+                                <div class="card-header">
+                                    <h3 class="card-title">Brugge Pub</h3>
+                                    <div class="rating">
+                                        <i class="fas fa-star"></i>
+                                        <span>4.8</span>
+                                    </div>
                                 </div>
+                                <div class="card-info">
+                                    <p>Бельгийская кухня • ₽₽</p>
+                                    <p class="address">ул. Светланская, д.44а</p>
+                                </div>
+                                <a href="#" class="btn book-btn">Забронировать</a>
                             </div>
-                            <div class="card-info">
-                                <p>Бельгийская кухня • ₽₽</p>
-                                <p class="address">ул. Светланская, д.44а</p>
-                            </div>
-                            <a href="#" class="btn book-btn">Забронировать</a>
                         </div>
-                    </div>
 
-                    <!-- Бар 2 -->
-                    <div class="card bar-card">
-                        <div class="card-image">
-                            <img id="img-bar-atelier" alt="Atelier">
-                        </div>
-                        <div class="card-body">
-                            <div class="card-header">
-                                <h3 class="card-title">Atelier</h3>
-                                <div class="rating">
-                                    <i class="fas fa-star"></i>
-                                    <span>4.8</span>
+                        <div class="card bar-card">
+                            <div class="card-image">
+                                <img id="img-bar-atelier" alt="Atelier">
+                            </div>
+                            <div class="card-body">
+                                <div class="card-header">
+                                    <h3 class="card-title">Atelier</h3>
+                                    <div class="rating">
+                                        <i class="fas fa-star"></i>
+                                        <span>4.8</span>
+                                    </div>
                                 </div>
+                                <div class="card-info">
+                                    <p>Европейская кухня • ₽₽₽</p>
+                                    <p class="address">ул. Светланская, д.9</p>
+                                </div>
+                                <a href="#" class="btn book-btn">Забронировать</a>
                             </div>
-                            <div class="card-info">
-                                <p>Европейская кухня • ₽₽₽</p>
-                                <p class="address">ул. Светланская, д.9</p>
-                            </div>
-                            <a href="#" class="btn book-btn">Забронировать</a>
                         </div>
-                    </div>
 
-                    <!-- Бар 3 -->
-                    <div class="card bar-card">
-                        <div class="card-image">
-                            <img id="img-bar-mumiy" alt="Мумий Тролль">
-                        </div>
-                        <div class="card-body">
-                            <div class="card-header">
-                                <h3 class="card-title">Мумий Тролль</h3>
-                                <div class="rating">
-                                    <i class="fas fa-star"></i>
-                                    <span>4.3</span>
+                        <div class="card bar-card">
+                            <div class="card-image">
+                                <img id="img-bar-mumiy" alt="Мумий Тролль">
+                            </div>
+                            <div class="card-body">
+                                <div class="card-header">
+                                    <h3 class="card-title">Мумий Тролль</h3>
+                                    <div class="rating">
+                                        <i class="fas fa-star"></i>
+                                        <span>4.3</span>
+                                    </div>
                                 </div>
+                                <div class="card-info">
+                                    <p>Европейская кухня • ₽₽₽₽</p>
+                                    <p class="address">ул. Светланская, д.83</p>
+                                </div>
+                                <a href="#" class="btn book-btn">Забронировать</a>
                             </div>
-                            <div class="card-info">
-                                <p>Европейская кухня • ₽₽₽₽</p>
-                                <p class="address">ул. Светланская, д.83</p>
-                            </div>
-                            <a href="#" class="btn book-btn">Забронировать</a>
                         </div>
-                    </div>
 
-                    <!-- Бар 4 -->
-                    <div class="card bar-card">
-                        <div class="card-image">
-                            <img id="img-bar-zhuklevich" alt="Жуклевичъ">
-                        </div>
-                        <div class="card-body">
-                            <div class="card-header">
-                                <h3 class="card-title">Жуклевичъ</h3>
-                                <div class="rating">
-                                    <i class="fas fa-star"></i>
-                                    <span>4.8</span>
+                        <div class="card bar-card">
+                            <div class="card-image">
+                                <img id="img-bar-zhuklevich" alt="Жуклевичъ">
+                            </div>
+                            <div class="card-body">
+                                <div class="card-header">
+                                    <h3 class="card-title">Жуклевичъ</h3>
+                                    <div class="rating">
+                                        <i class="fas fa-star"></i>
+                                        <span>4.8</span>
+                                    </div>
                                 </div>
+                                <div class="card-info">
+                                    <p>Европейская кухня • ₽₽₽</p>
+                                    <p class="address">ул. Светланская, д.7</p>
+                                </div>
+                                <a href="#" class="btn book-btn">Забронировать</a>
                             </div>
-                            <div class="card-info">
-                                <p>Европейская кухня • ₽₽₽</p>
-                                <p class="address">ул. Светланская, д.7</p>
+                        </div>
+                        
+                        <div class="card bar-card">
+                            <div class="card-image">
+                                <img id="img-bar-five" alt="Пятый бар">
                             </div>
-                            <a href="#" class="btn book-btn">Забронировать</a>
+                            <div class="card-body">
+                                <div class="card-header">
+                                    <h3 class="card-title">Пятый бар</h3>
+                                    <div class="rating">
+                                        <i class="fas fa-star"></i>
+                                        <span>4.5</span>
+                                    </div>
+                                </div>
+                                <div class="card-info">
+                                    <p>Русская кухня • ₽₽</p>
+                                    <p class="address">ул. Светланская, д.15</p>
+                                </div>
+                                <a href="#" class="btn book-btn">Забронировать</a>
+                            </div>
+                        </div>
+                        
+                        <div class="card bar-card">
+                            <div class="card-image">
+                                <img id="img-bar-six" alt="Шестой бар">
+                            </div>
+                            <div class="card-body">
+                                <div class="card-header">
+                                    <h3 class="card-title">Шестой бар</h3>
+                                    <div class="rating">
+                                        <i class="fas fa-star"></i>
+                                        <span>4.2</span>
+                                    </div>
+                                </div>
+                                <div class="card-info">
+                                    <p>Азиатская кухня • ₽₽₽</p>
+                                    <p class="address">ул. Светланская, д.21</p>
+                                </div>
+                                <a href="#" class="btn book-btn">Забронировать</a>
+                            </div>
                         </div>
                     </div>
                 </div>
+                <button type="button" class="carousel-arrow next">
+                    <i class="fas fa-chevron-right"></i>
+                </button>
             </div>
         </section>
 
-        <!-- Специальные предложения -->
         <section class="special-offers offers-section">
             <div class="container">
                 <h2 class="section-title">Специальные предложения</h2>
                 <div class="offers-container">
-                    <!-- Предложение 1 -->
                     <div class="offer-card special-offer-card">
                         <div class="offer-icon">
                             <i class="fas fa-umbrella-beach"></i>
@@ -216,7 +251,6 @@
                         <p class="offer-desc">Подборка ресторанов с прекрасным видом и атмосферой</p>
                     </div>
 
-                    <!-- Предложение 2 -->
                     <div class="offer-card special-offer-card">
                         <div class="offer-icon">
                             <i class="fas fa-heart"></i>
@@ -225,7 +259,6 @@
                         <p class="offer-desc">Идеальные места для особенного вечера</p>
                     </div>
 
-                    <!-- Предложение 3 -->
                     <div class="offer-card special-offer-card">
                         <div class="offer-icon">
                             <i class="fas fa-percent"></i>
@@ -241,7 +274,6 @@
         </section>
     </main>
 
-    <!-- Футер -->
     <footer class="footer">
         <div class="container">
             <div class="footer-columns">
