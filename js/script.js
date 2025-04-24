@@ -1,20 +1,8 @@
 document.addEventListener('DOMContentLoaded', function() {
     loadImages();
-    
     initFilters();
-    
     initBookingButtons();
-    
-    window.addEventListener('load', function() {
-        setTimeout(updateCarouselDimensions, 300);
-    });
 });
-
-function updateCarouselDimensions() {
-    if (typeof updateCarouselState === 'function') {
-        updateCarouselState(0);
-    }
-}
 
 function loadImages() {
     if (typeof IMAGES === 'undefined') {
@@ -66,9 +54,7 @@ function loadImages() {
 }
 
 const selectedCuisines = new Set();
-
 const selectedPrices = new Set();
-
 const selectedLocations = new Set();
 
 function initFilters() {
@@ -175,9 +161,7 @@ function initSorting() {
 
 function initFilterButtonText() {
     initButtonText('.filter-item:nth-child(1) .filter-btn', selectedCuisines, 'Кухня');
-    
     initButtonText('.filter-item:nth-child(2) .filter-btn', selectedPrices, 'Средний чек');
-    
     initButtonText('.filter-item:nth-child(3) .filter-btn', selectedLocations, 'Местоположение');
 }
 
@@ -190,185 +174,121 @@ function initButtonText(selector, selectedItems, defaultText) {
     } else if (selectedItems.size === 1) {
         buttonText.textContent = Array.from(selectedItems)[0];
     } else {
-        buttonText.textContent = `${defaultText} (${selectedItems.size})`;
+        buttonText.textContent = `Выбрано ${selectedItems.size}`;
     }
 }
 
 function showDropdown(filterButton, options, filterType) {
     const filterItem = filterButton.closest('.filter-item');
-    
-    if (!filterItem) return;
-    
     const existingDropdown = filterItem.querySelector('.filter-dropdown');
     
-    if (existingDropdown) {
-        existingDropdown.remove();
-        filterItem.classList.remove('open');
-        return;
-    }
-    
-    document.querySelectorAll('.filter-dropdown').forEach(dropdown => dropdown.remove());
     document.querySelectorAll('.filter-item.open').forEach(item => {
         item.classList.remove('open');
     });
     
-    document.querySelectorAll('.sort-dropdown').forEach(dropdown => dropdown.remove());
-    document.querySelectorAll('.sort-by.open').forEach(item => {
-        item.classList.remove('open');
-    });
+    if (existingDropdown) {
+        existingDropdown.remove();
+        return;
+    }
+    
+    const allDropdowns = document.querySelectorAll('.filter-dropdown');
+    allDropdowns.forEach(dropdown => dropdown.remove());
     
     filterItem.classList.add('open');
     
     const dropdown = document.createElement('div');
     dropdown.className = 'filter-dropdown';
     
-    const searchContainer = document.createElement('div');
-    searchContainer.className = 'filter-search';
+    const checkboxes = [];
+    let allCheckbox = null;
     
-    const searchIcon = document.createElement('i');
-    searchIcon.className = 'fas fa-search';
-    
-    const searchInput = document.createElement('input');
-    searchInput.type = 'text';
-    searchInput.placeholder = 'Поиск';
-    searchInput.className = 'filter-search-input';
-    
-    searchInput.addEventListener('input', function() {
-        const searchTerm = this.value.toLowerCase();
-        const checkboxes = dropdown.querySelectorAll('.filter-option:not(.all-option)');
-        
-        checkboxes.forEach(option => {
-            const label = option.querySelector('label');
-            const text = label.textContent.toLowerCase();
-            
-            if (text.includes(searchTerm)) {
-                option.style.display = '';
-            } else {
-                option.style.display = 'none';
-            }
-        });
-    });
-    
-    searchContainer.appendChild(searchIcon);
-    searchContainer.appendChild(searchInput);
-    
-    dropdown.appendChild(searchContainer);
-    
-    const optionsContainer = document.createElement('div');
-    optionsContainer.className = 'filter-options';
-    
-    let selectedValues;
+    let selectedSet;
     let defaultButtonText;
     
     switch (filterType) {
         case 'cuisine':
-            selectedValues = selectedCuisines;
+            selectedSet = selectedCuisines;
             defaultButtonText = 'Кухня';
             break;
         case 'price':
-            selectedValues = selectedPrices;
+            selectedSet = selectedPrices;
             defaultButtonText = 'Средний чек';
             break;
         case 'location':
-            selectedValues = selectedLocations;
+            selectedSet = selectedLocations;
             defaultButtonText = 'Местоположение';
             break;
         default:
-            selectedValues = new Set();
+            selectedSet = new Set();
             defaultButtonText = 'Фильтр';
     }
     
-    const allOption = document.createElement('div');
-    allOption.className = 'filter-option all-option';
-    
-    const allCheckbox = document.createElement('input');
-    allCheckbox.type = 'checkbox';
-    allCheckbox.id = `${filterType}-all`;
-    allCheckbox.checked = selectedValues.size === 0;
-    
-    const allLabel = document.createElement('label');
-    allLabel.htmlFor = `${filterType}-all`;
-    allLabel.textContent = 'Все';
-    
-    allOption.appendChild(allCheckbox);
-    allOption.appendChild(allLabel);
-    
-    optionsContainer.appendChild(allOption);
-    
-    const checkboxes = [];
-    
     options.forEach((option, index) => {
-        const optionDiv = document.createElement('div');
-        optionDiv.className = 'filter-option';
+        const optionElement = document.createElement('div');
+        optionElement.className = 'filter-option';
         
         const checkbox = document.createElement('input');
         checkbox.type = 'checkbox';
-        checkbox.id = `${filterType}-${index}`;
-        checkbox.checked = selectedValues.has(option.name);
+        checkbox.id = `filter-option-${filterType}-${option.replace(/\s+/g, '-').toLowerCase()}`;
+        checkbox.className = 'custom-checkbox';
         
-        const label = document.createElement('label');
-        label.htmlFor = `${filterType}-${index}`;
-        label.textContent = option.name;
-        
-        checkbox.addEventListener('change', function() {
-            handleCheckboxLogic(this, option.name, allCheckbox, checkboxes, selectedValues, filterButton, defaultButtonText);
-        });
-        
-        checkboxes.push(checkbox);
-        
-        optionDiv.appendChild(checkbox);
-        optionDiv.appendChild(label);
-        
-        optionsContainer.appendChild(optionDiv);
-    });
-    
-    allCheckbox.addEventListener('change', function() {
-        if (this.checked) {
-            selectedValues.clear();
-            checkboxes.forEach(cb => {
-                cb.checked = false;
-            });
+        if (option === 'Все') {
+            checkbox.checked = selectedSet.size > 0 && (options.length - 1 === selectedSet.size);
+            allCheckbox = checkbox;
         } else {
-            this.checked = true;
+            checkbox.checked = selectedSet.has(option);
+            checkboxes.push(checkbox);
         }
         
-        updateButtonText(filterButton, checkboxes, allCheckbox, defaultButtonText);
-    });
-    
-    dropdown.appendChild(optionsContainer);
-    
-    const btnContainer = document.createElement('div');
-    btnContainer.className = 'filter-buttons';
-    
-    const applyBtn = document.createElement('button');
-    applyBtn.className = 'filter-apply-btn';
-    applyBtn.textContent = 'Применить';
-    
-    applyBtn.addEventListener('click', function() {
-        dropdown.remove();
-        filterItem.classList.remove('open');
-    });
-    
-    const resetBtn = document.createElement('button');
-    resetBtn.className = 'filter-reset-btn';
-    resetBtn.textContent = 'Сбросить';
-    
-    resetBtn.addEventListener('click', function() {
-        selectedValues.clear();
-        checkboxes.forEach(cb => {
-            cb.checked = false;
-        });
-        allCheckbox.checked = true;
+        const label = document.createElement('label');
+        label.htmlFor = checkbox.id;
         
-        updateButtonText(filterButton, checkboxes, allCheckbox, defaultButtonText);
+        if (option.includes('(') && option.includes(')')) {
+            const bracketIndex = option.indexOf('(');
+            const mainText = option.substring(0, bracketIndex).trim();
+            const bracketText = option.substring(bracketIndex);
+            
+            label.textContent = mainText + ' ';
+            const spanElement = document.createElement('span');
+            spanElement.textContent = bracketText;
+            label.appendChild(spanElement);
+        } else {
+            label.textContent = option;
+        }
+        
+        optionElement.appendChild(checkbox);
+        optionElement.appendChild(label);
+        
+        checkbox.addEventListener('change', function() {
+            if (checkbox.dataset.processing) return;
+            
+            checkbox.dataset.processing = 'true';
+            handleCheckboxLogic(this, option, allCheckbox, checkboxes, selectedSet, filterButton, defaultButtonText);
+            
+            setTimeout(() => {
+                delete checkbox.dataset.processing;
+            }, 0);
+        });
+        
+        optionElement.addEventListener('click', function(e) {
+            e.stopPropagation();
+            
+            if (e.target === checkbox || e.target === label || label.contains(e.target)) {
+                return;
+            }
+            
+            checkbox.checked = !checkbox.checked;
+            
+            const changeEvent = new Event('change');
+            checkbox.dispatchEvent(changeEvent);
+        });
+        
+        dropdown.appendChild(optionElement);
     });
     
-    btnContainer.appendChild(resetBtn);
-    btnContainer.appendChild(applyBtn);
-    
-    dropdown.appendChild(btnContainer);
-    
-    filterItem.appendChild(dropdown);
+    if (filterItem) {
+        filterItem.appendChild(dropdown);
+    }
     
     document.addEventListener('click', function closeDropdown(e) {
         if (!dropdown.contains(e.target) && e.target !== filterButton && !filterButton.contains(e.target)) {
@@ -380,15 +300,40 @@ function showDropdown(filterButton, options, filterType) {
 }
 
 function handleCheckboxLogic(checkbox, option, allCheckbox, checkboxes, selectedSet, filterButton, defaultButtonText) {
-    if (checkbox.checked) {
-        selectedSet.add(option);
-        allCheckbox.checked = false;
-    } else {
-        selectedSet.delete(option);
+    if (option === 'Все') {
+        const isChecked = checkbox.checked;
         
-        const anyChecked = checkboxes.some(cb => cb.checked);
-        if (!anyChecked) {
-            allCheckbox.checked = true;
+        checkboxes.forEach(cb => {
+            cb.dataset.processing = 'true';
+            cb.checked = isChecked;
+            
+            const itemOption = cb.nextElementSibling.textContent;
+            if (isChecked) {
+                selectedSet.add(itemOption);
+            } else {
+                selectedSet.delete(itemOption);
+            }
+            
+            setTimeout(() => {
+                delete cb.dataset.processing;
+            }, 0);
+        });
+    } else {
+        if (checkbox.checked) {
+            selectedSet.add(option);
+        } else {
+            selectedSet.delete(option);
+        }
+        
+        const allItemsSelected = checkboxes.every(cb => cb.checked);
+        
+        if (allCheckbox) {
+            allCheckbox.dataset.processing = 'true';
+            allCheckbox.checked = checkboxes.length > 0 && allItemsSelected;
+            
+            setTimeout(() => {
+                delete allCheckbox.dataset.processing;
+            }, 0);
         }
     }
     
@@ -396,63 +341,48 @@ function handleCheckboxLogic(checkbox, option, allCheckbox, checkboxes, selected
 }
 
 function updateButtonText(filterButton, checkboxes, allCheckbox, defaultText) {
-    const buttonSpan = filterButton.querySelector('span');
-    if (!buttonSpan) return;
+    const buttonText = filterButton.querySelector('span');
     
-    if (allCheckbox.checked) {
-        buttonSpan.textContent = defaultText;
+    if (!buttonText) return;
+    
+    const selectedItems = checkboxes
+        .filter(cb => cb.checked)
+        .map(cb => {
+            const label = cb.nextElementSibling;
+            return label.textContent;
+        });
+    
+    if (allCheckbox && allCheckbox.checked) {
+        buttonText.textContent = 'Все';
         return;
     }
     
-    const checkedOptions = checkboxes.filter(cb => cb.checked);
-    
-    if (checkedOptions.length === 0) {
-        buttonSpan.textContent = defaultText;
-        allCheckbox.checked = true;
-    } else if (checkedOptions.length === 1) {
-        const checkedLabel = document.querySelector(`label[for="${checkedOptions[0].id}"]`);
-        buttonSpan.textContent = checkedLabel ? checkedLabel.textContent : defaultText;
+    if (selectedItems.length === 0) {
+        buttonText.textContent = defaultText;
+    } else if (selectedItems.length === 1) {
+        let displayText = selectedItems[0];
+        
+        const bracketIndex = displayText.indexOf('(');
+        if (bracketIndex > 0) {
+            displayText = displayText.substring(0, bracketIndex).trim();
+        }
+        
+        buttonText.textContent = displayText;
     } else {
-        buttonSpan.textContent = `${defaultText} (${checkedOptions.length})`;
+        buttonText.textContent = `Выбрано ${selectedItems.length}`;
     }
 }
 
 function initBookingButtons() {
-    document.querySelectorAll('.book-btn').forEach(btn => {
-        btn.addEventListener('click', function(e) {
+    const bookButtons = document.querySelectorAll('.book-btn');
+    bookButtons.forEach(button => {
+        button.addEventListener('click', function(e) {
             e.preventDefault();
             
-            const card = this.closest('.card');
-            if (!card) return;
+            const card = this.closest('.restaurant-card');
+            const title = card ? card.querySelector('.card-title').textContent : 'ресторан';
             
-            const titleElement = card.querySelector('.card-title');
-            const title = titleElement ? titleElement.textContent : 'ресторан';
-            
-            alert(`Функционал бронирования для "${title}" будет реализован позже`);
+            alert(`Бронирование столика в "${title}" будет реализовано позже`);
         });
     });
 }
-
-window.updateFilterHeaderHeight = function() {
-    const filterHeader = document.querySelector('.search-section');
-    const mainNav = document.querySelector('.main-nav');
-    
-    if (filterHeader && mainNav) {
-        const filterHeaderHeight = filterHeader.offsetHeight;
-        const mainNavTop = mainNav.offsetTop;
-        
-        if (window.pageYOffset > filterHeaderHeight) {
-            mainNav.classList.add('fixed');
-            document.body.style.paddingTop = `${mainNavTop}px`;
-        } else {
-            mainNav.classList.remove('fixed');
-            document.body.style.paddingTop = 0;
-        }
-    }
-};
-
-window.addEventListener('scroll', function() {
-    if (typeof window.updateFilterHeaderHeight === 'function') {
-        window.updateFilterHeaderHeight();
-    }
-});
