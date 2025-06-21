@@ -1,22 +1,59 @@
+const API_BASE_URL = 'http://127.0.0.1:8000';
+const API_KEY = 'bc32bd3883ae477fb118378f68e61bc7';
+
 document.addEventListener('DOMContentLoaded', function() {
     loadRestaurantsData();
     initCarouselControls();
     initBarCarousel();
 });
 
-function loadRestaurantsData() {
-    fetch('assets/data/establishments_restaurants.json')
+/**
+ * Выполняет запрос к API с использованием API-ключа
+ * @param {string} endpoint - конечная точка API (без базового URL)
+ * @param {string} method - HTTP метод (GET, POST, PUT, DELETE)
+ * @param {Object} data - данные для отправки (для POST, PUT)
+ * @returns {Promise} - промис с результатом запроса
+ */
+function makeApiRequest(endpoint, method = 'GET', data = null) {
+    const url = `${API_BASE_URL}${endpoint}`;
+    
+    const options = {
+        method: method,
+        headers: {
+            'Authorization': `Api-Key ${API_KEY}`,
+            'Content-Type': 'application/json'
+        }
+    };
+    
+    if (data && (method === 'POST' || method === 'PUT')) {
+        options.body = JSON.stringify(data);
+    }
+    
+    return fetch(url, options)
         .then(response => {
             if (!response.ok) {
-                throw new Error('Ошибка загрузки данных: ' + response.status);
+                throw new Error(`Ошибка запроса: ${response.status}`);
             }
             return response.json();
-        })
+        });
+}
+
+function loadRestaurantsData() {
+    makeApiRequest('/api/establishments/?type=restaurant')
         .then(data => {
             renderRestaurantCards(data.results);
         })
         .catch(error => {
             console.error('Ошибка при загрузке данных ресторанов:', error);
+            console.log('Загружаем локальные данные...');
+            fetch('assets/data/establishments_restaurants.json')
+                .then(response => response.json())
+                .then(data => {
+                    renderRestaurantCards(data.results);
+                })
+                .catch(fallbackError => {
+                    console.error('Не удалось загрузить даже локальные данные:', fallbackError);
+                });
         });
 }
 
